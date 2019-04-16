@@ -8,6 +8,7 @@ class Footer extends Component {
               <span className="text-muted footer-span">Master Degree in Informatics Engineerings</span>
               <span className="text-muted footer-span">Services Engineering Course 2018/2019</span>
               <span className="text-muted footer-span">University of Coimbra</span>
+              <img className="logo-footer" src="images/ucoimbra-logo.png" alt="UC Logo 2019" width="120"></img>
             </div>
           </footer>
         )

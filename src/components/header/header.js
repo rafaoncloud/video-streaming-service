@@ -34,7 +34,7 @@ class Header extends Component {
     return(  
       <header>
         <Navbar color="light" light expand="md">
-          <NavbarBrand href="/">Streaming App</NavbarBrand>
+          <NavbarBrand href="/" className="logo">Streaming App</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
