@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class HomePage extends Component {
+class Logout extends Component {
     render (){
         return(
           <div className="wrap">
-            Home Page
+            Logout
           </div>
         )
     }
 }
 
-export default HomePage;
+export default Logout;

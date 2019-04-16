@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'; // Works with Router
 
 class Header extends Component {
   render (){
@@ -12,19 +12,22 @@ class Header extends Component {
           <nav>
             <ul>
               <li>
-                <a href="/Home">Home</a>
+                <Link to="/">Home</Link>
               </li>
               <li>
-                <a href="">Users</a>
+                <Link to="/users">Users</Link>
               </li>
               <li>
-                <a href="#">About Us</a>
+                <Link to="/about-us">About us</Link>
               </li>
               <li>
-                <a href="#">Login</a>
+                <Link to="/login">Login</Link>
               </li>
               <li>
-                <a href="#">Logout</a>
+                <Link to="/logout">Logout</Link>
+              </li>
+              <li>
+                <Link to="/sign-up">Sign up</Link>
               </li>
             </ul>
           </nav>
