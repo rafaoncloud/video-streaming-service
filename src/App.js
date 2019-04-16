@@ -20,16 +20,16 @@ class App extends Component {
   render() {
     return (
       <Router>
-      <div /*className="App"*/>
+      <div className="wrapper-app" /*className="App"*/>
         <Header/>
-        
-        <Route exact path='/' component={HomePage}/>
-        <Route exact path='/about-us' component={AboutUs}/>
-        <Route exact path='/users' component={UsersManager}/>
-        <Route exact path='/login' component={Login}/>
-        <Route exact path='/logout' component={Logout}/>
-        <Route exact path='/sign-up' component={SignUp}/>
-
+        <div className="content">
+          <Route exact path='/' component={HomePage}/>
+          <Route exact path='/about-us' component={AboutUs}/>
+          <Route exact path='/users' component={UsersManager}/>
+          <Route exact path='/login' component={Login}/>
+          <Route exact path='/logout' component={Logout}/>
+          <Route exact path='/sign-up' component={SignUp}/>
+        </div>
         <Footer/>
       </div>
       </Router>

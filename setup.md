@@ -8,6 +8,6 @@ The first step was create the react project.
 $ npx create-react-app video-streaming-service
 ~~~
 
-We imported the reactstrap, a bootstrap library for react.js
+We imported the reactstrap, a bootstrap like for react.js
 
 https://reactstrap.github.io

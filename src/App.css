@@ -32,9 +32,27 @@
   }
 }
 
-.container {
-  margin:0 auto; /* this will center the page */
-  /*width:100px;*/ /*  use your width here */
+html,
+body {
+   margin:0;
+   padding:0;
+   height:100%;
+}
+
+.wrapper-app {
+  position: relative;
+  margin: 0;
+  padding-bottom: 6rem;
+  min-height: 100vh; /* the vh instead of % makes the trick to set the footer on the bottom of the page*/
+  height:100%;
+}
+
+.content {
+  padding-top: 32px;
+  margin: 0 auto; /* this will center the page */
+  width: 640px; /*  use your width here */
+
+  padding-bottom: 0.38rem;
 }
 
 .footer-span {
@@ -44,9 +62,11 @@
 }
 
 .footer {
-  position: fixed;
-  left: 0;
+  position: absolute;
+  right: 0;
   bottom: 0;
-  width: 100%;
+  left: 0;
+  padding: 0.38rem;
   background-color: rgb(248,249,250);
+  text-align: center;
 }

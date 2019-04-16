@@ -4,7 +4,7 @@ import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 class SignUp extends Component {
     render (){
         return(
-          <div className="wrap container"> 
+          <div> 
             <Form>
               <FormGroup>
                 <Label for="exampleEmail">Email</Label>
