@@ -30,6 +30,7 @@ class App extends Component {
           <Route exact path='/logout' component={Logout}/>
           <Route exact path='/sign-up' component={SignUp}/>
         </div>
+        <br/>
         <Footer/>
       </div>
       </Router>

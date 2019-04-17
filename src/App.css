@@ -55,7 +55,7 @@ html, body {
   margin: 0 auto; /* this will center the page */
   width: 640px; /*  use your width here */
 
-  padding-bottom: 0.38rem;
+  padding-bottom: 0.8rem; /*Space reserved for the footer*/
 }
 
 .footer-span {
@@ -69,11 +69,12 @@ html, body {
   right: 0;
   bottom: 0;
   left: 0;
-  padding: 0.38rem;
   background-color: rgb(248,249,250);
   text-align: center;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 .logo-footer {
-  padding-top: 10px;
+  padding-top: 4px;
 }
