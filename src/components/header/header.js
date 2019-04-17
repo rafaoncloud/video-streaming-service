@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'; // Works with Router
 
+import './header.css'
+
 import{
   Navbar,
   Nav,
@@ -24,7 +26,7 @@ class Header extends Component {
   render (){
     return(  
       <header>
-        <Navbar bg="light" expand="lg">
+        <Navbar bg="light" expand="lg" fixed="top">
           <Navbar.Brand href="/" className="logo">Streaming App</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

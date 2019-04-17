@@ -16,7 +16,7 @@ class ProductsList extends Component {
 	render (){
 
 		var cards = this.state.products.map(product =>(
-				<Col>
+				<Col key={product.id}>
 					<ProductCard product={product} />
 				</Col>
 		))

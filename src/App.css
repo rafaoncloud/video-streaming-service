@@ -61,7 +61,7 @@ html, body {
 }
 
 .content {
-  padding-top: 32px;
+  padding-top: 80px;
   margin: 0 auto; /* this will center the page */
   width: 640px; /*  use your width here */
 
@@ -90,6 +90,8 @@ html, body {
 }
 
 .my-carousel {
+  margin-top: 56px; /* Margin to the Menu*/
+
   max-width: 100%;
   height:300px;
   background: black;

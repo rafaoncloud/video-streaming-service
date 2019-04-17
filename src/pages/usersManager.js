@@ -1,13 +1,39 @@
 import React, { Component } from 'react';
 
+import UserList from '../components/users/userList'
+
+const usersExample = [
+  {
+    name: 'Eric',
+    surName: 'Clapton',
+    birthDate: '30/03/1945',
+    boxActive: false
+  },
+  {
+    name: 'Rafael',
+    surName: 'Henriques',
+    birthDate: '14/11/1995',
+    boxActive: true
+  },
+]
+
 class UsersManager extends Component {
-    render (){
-        return(
-          <div>
-            Users Manager
-          </div>
-        )
-    }
+  constructor(props) {
+		super(props);
+
+		this.state = {
+			users: usersExample
+		};
+	}
+
+  render (){
+      return(
+        <div>
+          <h3>Manage Users</h3>
+          <UserList users={this.state.users}/>
+        </div>
+      )
+  }
 }
 
 export default UsersManager;
