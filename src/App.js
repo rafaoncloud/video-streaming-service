@@ -22,8 +22,10 @@ class App extends Component {
       <Router>
       <div className="wrapper-app" /*className="App"*/>
         <Header/>
-        <div className="content">
+        <div className="content-homepage">
           <Route exact path='/' component={HomePage}/>
+        </div>
+        <div className="content">
           <Route exact path='/about-us' component={AboutUs}/>
           <Route exact path='/users' component={UsersManager}/>
           <Route exact path='/login' component={Login}/>
