@@ -38,7 +38,7 @@ html, body {
    height:100%;
 
    max-width: 100%;
-   overflow-x: hidden; /* Disable scroll horizontally - for mobile purpose*/
+   /*overflow-x: hidden; /* Disable scroll horizontally - for mobile purpose*/
 }
 .logo{
   font-family: 'Courier New', Courier, monospace;
