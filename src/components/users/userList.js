@@ -16,27 +16,32 @@ class ProductsList extends Component {
 		this.state = {
 			users: props.users, /*products.slice(0, 12)*/
 		};
-
-		this.handleEdit = this.handleEdit.bind(this)
-	}
-
-	handleEdit(event){
-		
 	}
 
 	render (){
 
 		var users = this.state.users.map(user =>(
 				<Row style={{marginTop:24}} key={user.id}>
-					<Col> {user.name} {user.surName} </Col>
+					<Col> {user.name} {user.lastName} </Col>
 					<Col> {user.birthDate} </Col>
 					<Col> {user.boxActive ? 
 						<img src="images/icons/green-status.png" alt="True" height="15px"/>
 						: 
 						<img src="images/icons/red-status.png" alt="False" height="13px"/> 
 					 } 
-					 </Col>
-					<Col> <Button variant="outline-primary" onClick={this.handleEdit}> <Link to="/user" userId={user.id} > Change </Link> </Button> </Col>
+					</Col>
+					<Col> 
+						<Button variant="outline-primary"> 
+							<Link to={{
+								pathname:'/user',
+								state:{
+									userId: user.id
+								}
+							}} > 
+								Change 
+							</Link> 
+						</Button> 
+					</Col>
 				</Row>
 		))
 

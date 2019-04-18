@@ -6,14 +6,14 @@ const usersExample = [
   {
     id: 1,
     name: 'Eric',
-    surName: 'Clapton',
+    lastName: 'Clapton',
     birthDate: '30/03/1945',
     boxActive: false
   },
   {
     id: 2,
     name: 'Rafael',
-    surName: 'Henriques',
+    lastName: 'Henriques',
     birthDate: '14/11/1995',
     boxActive: true
   },

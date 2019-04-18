@@ -1,93 +1,110 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Form, Button } from 'react-bootstrap'
 
+const usersExample = [
+  {
+    id: 1,
+    name: 'Eric',
+    lastName: 'Clapton',
+    birthDate: '30/03/1945',
+    boxActive: false
+  },
+  {
+    id: 2,
+    name: 'Rafael',
+    lastName: 'Henriques',
+    birthDate: '14/11/1995',
+    boxActive: true
+  },
+]
 
 class UserManager extends Component {
-  constructor(props) {
+	constructor(props) {
 		super(props);
 
+		const userId = props.location.state.userId
+		var user;
+		
+
+		if(userId === 1){
+			user = usersExample[0]
+		}else if(userId === 2) {
+			user = usersExample[1]
+		}
+
 		this.state = {
-			user: props.user
+			id: userId,
+			user: user
 		};
 	}
 
-  render (){
-      return(
-        <div>
-          <h3>User: {this.state.name}</h3>
-          <Form>
-              <FormGroup>
-                <Label for="exampleEmail">Email</Label>
-                <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
-              </FormGroup>
-              <FormGroup>
-                <Label for="examplePassword">Password</Label>
-                <Input type="password" name="password" id="examplePassword" placeholder="password placeholder" />
-              </FormGroup>
-              <FormGroup>
-                <Label for="exampleSelect">Select</Label>
-                <Input type="select" name="select" id="exampleSelect">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </Input>
-              </FormGroup>
-              <FormGroup>
-                <Label for="exampleSelectMulti">Select Multiple</Label>
-                <Input type="select" name="selectMulti" id="exampleSelectMulti" multiple>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </Input>
-              </FormGroup>
-              <FormGroup>
-                <Label for="exampleText">Text Area</Label>
-                <Input type="textarea" name="text" id="exampleText" />
-              </FormGroup>
-              <FormGroup>
-                <Label for="exampleFile">File</Label>
-                <Input type="file" name="file" id="exampleFile" />
-                <FormText color="muted">
-                  This is some placeholder block-level help text for the above input.
-                  It's a bit lighter and easily wraps to a new line.
-                </FormText>
-              </FormGroup>
-              <FormGroup tag="fieldset">
-                <legend>Radio Buttons</legend>
-                <FormGroup check>
-                  <Label check>
-                    <Input type="radio" name="radio1" />{' '}
-                    Option one is this and that—be sure to include why it's great
-                  </Label>
-                </FormGroup>
-                <FormGroup check>
-                  <Label check>
-                    <Input type="radio" name="radio1" />{' '}
-                    Option two can be something else and selecting it will deselect option one
-                  </Label>
-                </FormGroup>
-                <FormGroup check disabled>
-                  <Label check>
-                    <Input type="radio" name="radio1" disabled />{' '}
-                    Option three is disabled
-                  </Label>
-                </FormGroup>
-              </FormGroup>
-              <FormGroup check>
-                <Label check>
-                  <Input type="checkbox" />{' '}
-                  Check me out
-                </Label>
-              </FormGroup>
-              <Button>Submit</Button>
-            </Form>
-        </div>
-      )
-  }
+	render (){
+		// Debug
+		window.alert(JSON.stringify(this.state, null, "\t"))
+
+		return(
+			<div>
+				<h3 style={{marginBottom:'40px'}}>User: {this.state.user.name} {this.state.user.lastName}</h3>
+				<Form>
+					<Form.Group controlId="exampleForm.ControlInput1">
+						<Form.Label>First Name</Form.Label>
+						<Form.Control type="text" placeholder="empty" 
+							value={this.state.user.name}
+						/>
+					</Form.Group>
+					<Form.Group controlId="exampleForm.ControlInput2">
+						<Form.Label>Last Name</Form.Label>
+						<Form.Control type="text" placeholder="empty" 
+							value={this.state.user.lastName}
+						/>
+					</Form.Group>
+					<Form.Group controlId="exampleForm.ControlInput3">
+						<Form.Label>Email address</Form.Label>
+						<Form.Control type="email" placeholder="empty" 
+							value={this.state.user.email}
+						/>
+					</Form.Group>
+					<Form.Group controlId="exampleForm.ControlInput4">
+						<Form.Label>Birth Date</Form.Label>
+						<Form.Control type="text" placeholder="empty" 
+							value={this.state.user.birthDate}
+						/>
+					</Form.Group>
+					<Form.Group controlId="exampleForm.ControlInput5">
+						<Form.Label>Address</Form.Label>
+						<Form.Control type="text" placeholder="empty" />
+					</Form.Group>
+					<Form.Group controlId="exampleForm.ControlSelect1">
+						<Form.Label>Has Activated the Box</Form.Label>
+						<Form.Control as="select" 
+							value={this.state.user.boxActive}>
+							<option value="true">True</option>
+							<option value="false">False</option>
+						</Form.Control>
+					</Form.Group>
+					<Form.Group controlId="exampleForm.ControlSelect2">
+						<Form.Label>Example multiple select</Form.Label>
+						<Form.Control as="select" multiple>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+						</Form.Control>
+					</Form.Group>
+					<Form.Group controlId="exampleForm.ControlTextarea1">
+						<Form.Label>Example textarea</Form.Label>
+						<Form.Control as="textarea" rows="3" />
+					</Form.Group>
+				</Form>
+				<div className="center-button">
+          <Button variant="primary" type="submit">
+            Apply Changes
+          </Button>
+          </div>
+			</div>
+		)
+	}
 }
 
 export default UserManager;
