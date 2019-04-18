@@ -16,6 +16,8 @@ import Login from './pages/login'
 import Logout from './pages/logout'
 import SignUp from './pages/signUp'
 
+import UserManager from './pages/userManager'
+
 class App extends Component {
   render() {
     return (
@@ -31,6 +33,8 @@ class App extends Component {
           <Route exact path='/login' component={Login}/>
           <Route exact path='/logout' component={Logout}/>
           <Route exact path='/sign-up' component={SignUp}/>
+          
+          <Route exact path='/user' component={UserManager}/>
         </div>
         <br/>
         <Footer/>

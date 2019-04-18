@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { Link } from 'react-router-dom'
+
 import { 
 	Container,
 	Row,
@@ -14,6 +16,12 @@ class ProductsList extends Component {
 		this.state = {
 			users: props.users, /*products.slice(0, 12)*/
 		};
+
+		this.handleEdit = this.handleEdit.bind(this)
+	}
+
+	handleEdit(event){
+		<Nav.Link href="/">Home</Nav.Link>
 	}
 
 	render (){
@@ -28,7 +36,7 @@ class ProductsList extends Component {
 						<img src="images/icons/red-status.png" alt="False" height="13px"/> 
 					 } 
 					 </Col>
-					<Col> <Button variant="outline-primary"> Change </Button> </Col>
+					<Col> <Button variant="outline-primary" onClick={this.handleEdit}> Change </Button> </Col>
 				</Row>
 		))
 
