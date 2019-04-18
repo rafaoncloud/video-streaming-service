@@ -21,13 +21,13 @@ class ProductsList extends Component {
 	}
 
 	handleEdit(event){
-		<Nav.Link href="/">Home</Nav.Link>
+		
 	}
 
 	render (){
 
 		var users = this.state.users.map(user =>(
-				<Row style={{marginTop:24}}>
+				<Row style={{marginTop:24}} key={user.id}>
 					<Col> {user.name} {user.surName} </Col>
 					<Col> {user.birthDate} </Col>
 					<Col> {user.boxActive ? 
@@ -36,7 +36,7 @@ class ProductsList extends Component {
 						<img src="images/icons/red-status.png" alt="False" height="13px"/> 
 					 } 
 					 </Col>
-					<Col> <Button variant="outline-primary" onClick={this.handleEdit}> Change </Button> </Col>
+					<Col> <Button variant="outline-primary" onClick={this.handleEdit}> <Link to="/user" userId={user.id} > Change </Link> </Button> </Col>
 				</Row>
 		))
 

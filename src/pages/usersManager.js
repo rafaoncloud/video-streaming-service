@@ -4,12 +4,14 @@ import UserList from '../components/users/userList'
 
 const usersExample = [
   {
+    id: 1,
     name: 'Eric',
     surName: 'Clapton',
     birthDate: '30/03/1945',
     boxActive: false
   },
   {
+    id: 2,
     name: 'Rafael',
     surName: 'Henriques',
     birthDate: '14/11/1995',
