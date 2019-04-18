@@ -52,9 +52,33 @@ class UserManager extends Component {
 
 		this.state = {
 			id: userId,
-			user: user
+			user: user,
+			frontPicture: '/images/example.jpg',
+      backPicture: '/images/example.jpg'
 		};
-	}
+
+	  this.handleFrontPicture = this.handleFrontPicture.bind(this)
+    this.handleBackPicture = this.handleBackPicture.bind(this)
+  }
+
+  handleFrontPicture(event){
+    let picture = event.target.files[0]
+
+    this.setState({
+      frontPicture: URL.createObjectURL(picture),
+      backPicture: this.state.backPicture
+    })
+  }
+
+  handleBackPicture(event){
+    const picture = event.target.files[0] 
+
+    this.setState({
+      frontPicture: this.state.frontPicture,
+      backPicture: URL.createObjectURL(picture)
+    })
+  }
+
 
 	render (){
 		let user = this.state.user
@@ -128,31 +152,37 @@ class UserManager extends Component {
 							<Form.Group controlId="exampleForm.ControlInput5">
 								<Form.Label>Citizen Card </Form.Label>
 								<br/>
-								<Image src="/images/example.jpg" height="150px"/>
+								<Image src={this.state.frontPicture}  height="150px"/>
 							</Form.Group>
 						</Col>
 						<Col>
 								<Form.Group controlId="exampleForm.ControlInput5">
 									<Form.Label>Citizen Card </Form.Label>
 									<br/>
-									<Image src="/images/example.jpg" height="150px"/>
+									<Image src={this.state.backPicture}  height="150px"/>
 								</Form.Group>
 						</Col>
 					</Form.Row>
 					<Form.Row>
-						<Col>
-							<Form.Group controlId="exampleForm.ControlInput5">
-								<Form.Label>Upload Front </Form.Label>
-								<Form.Control type="file" placeholder="empty" />
-							</Form.Group>
-						</Col>
-						<Col>
-							<Form.Group controlId="exampleForm.ControlInput5">
-								<Form.Label>Upload Back </Form.Label>
-								<Form.Control type="file" placeholder="empty" />
-							</Form.Group>
-						</Col>
-					</Form.Row>
+            <Col>
+              <Form.Group controlId="exampleForm.ControlInput5">
+                <Form.Label>Upload Front </Form.Label>
+                <Form.Control 
+                  onChange={ (event) => this.handleFrontPicture(event)}
+                  required type="file" placeholder="empty"
+                  accept="image/png, image/jpeg" />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group controlId="exampleForm.ControlInput5">
+                <Form.Label>Upload Back </Form.Label>
+                <Form.Control 
+                  onChange={ (event) => this.handleBackPicture(event)}
+                  required type="file" placeholder="empty"
+                  accept="image/png, image/jpeg" />
+              </Form.Group>
+            </Col>
+          </Form.Row>
 					<Form.Row>
 						<Col>
 							<Form.Group controlId="exampleForm.ControlTextarea1">
