@@ -25,9 +25,9 @@ class ProductsList extends Component {
 					<Col> {user.name} {user.lastName} </Col>
 					<Col> {user.birthDate} </Col>
 					<Col> {user.boxActive ? 
-						<img src="images/icons/green-status.png" alt="True" height="15px"/>
+						<img src="images/icons/green-status.png" alt="True " height="15px"/>
 						: 
-						<img src="images/icons/red-status.png" alt="False" height="13px"/> 
+						<img src="images/icons/red-status.png" alt="False " height="13px"/> 
 					 } 
 					</Col>
 					<Col> 
