@@ -9,11 +9,22 @@ class SignUp extends Component {
 
     this.state = {
       frontPicture: '/images/example.jpg',
-      backPicture: '/images/example.jpg'
+      backPicture: '/images/example.jpg',
+      example: null
     }
 
     this.handleFrontPicture = this.handleFrontPicture.bind(this)
     this.handleBackPicture = this.handleBackPicture.bind(this)
+    this.fetchExample = this.fetchExample.bind(this)
+    this.postExample = this.postExample.bind(this)
+
+    //setInterval(): executes a function, over and over again, at specified time intervals
+    //setTimeout() : executes a function, once, after waiting a specified number of milliseconds
+
+    /*setInterval(() => {
+      this.fetchExample();
+      //window.alert(JSON.stringify(this.state, null, "\t"))
+    }, 3000);*/
   }
 
   handleFrontPicture(event){
@@ -23,6 +34,8 @@ class SignUp extends Component {
       frontPicture: URL.createObjectURL(picture),
       backPicture: this.state.backPicture
     })
+
+    this.fetchExample()
   }
 
   handleBackPicture(event){
@@ -32,6 +45,72 @@ class SignUp extends Component {
       frontPicture: this.state.frontPicture,
       backPicture: URL.createObjectURL(picture)
     })
+
+    this.postExample()
+  }
+
+  fetchExample(){
+    const url = 'https://fvspqr8obi.execute-api.us-east-1.amazonaws.com/Production/users';
+    fetch(url, { 
+          method: "GET", // *GET, POST, PUT, DELETE, etc.
+          mode: "cors" // no-cors, cors, *same-origin
+      })  
+    .then((resp) => {
+      console.log("GET /users Response Code: " + resp.status)
+      return resp.json() 
+    })
+    .then(body => {
+      let users = body
+      /*let users = data.results.map((user) => {
+        return(
+          <div>
+            
+          </div>
+            <div>
+              <p>{pic.name.first} {pic.name.last}</p>
+              <img src={pic.picture.medium} alt="Random User - 100"/>
+            </div> 
+          
+        );
+        
+      });
+      let names = data.results.map((res, index) => {
+        return(res.name.first + res.name.last)
+
+        return(
+          <li key={index}>
+            {res.name.first + res.name.last}
+          </li>
+        )
+        
+      });*/
+      this.setState({
+        frontPicture: this.state.frontPicture,
+        backPicture: this.state.backPicture,
+        example: users
+      
+      });
+      alert("Fetch Example: " + JSON.stringify(this.state, null, "\t"))
+      //console.log("state",this.state.pictures);
+    })
+    .catch(function(err){
+      console.log("Fetch Error: ",err);
+    });
+  }
+
+  postExample(){
+    const url = 'https://fvspqr8obi.execute-api.us-east-1.amazonaws.com/Production/users';
+    var data = this.state.example[0]
+    data.id = 24
+    data.name = "Rafa"
+    console.log(JSON.stringify(data))
+    fetch(url, { 
+          method: "POST", // *GET, POST, PUT, DELETE, etc.
+          mode: "cors", // no-cors, cors, *same-origin
+          body: JSON.stringify(data), // data can be `string` or {object}!
+      })
+    .then(response => console.log("POST /users  Response Code: " + JSON.stringify(response.status)))
+    .catch(error => console.error("Error:" + error));
   }
 
   render (){
