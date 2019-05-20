@@ -18,6 +18,8 @@ class SignUp extends Component {
     this.fetchExample = this.fetchExample.bind(this)
     this.postExample = this.postExample.bind(this)
 
+    this.postSignUpForm = this.postSignUpForm.bind(this)
+
     //setInterval(): executes a function, over and over again, at specified time intervals
     //setTimeout() : executes a function, once, after waiting a specified number of milliseconds
 
@@ -28,14 +30,18 @@ class SignUp extends Component {
   }
 
   handleFrontPicture(event){
-    let picture = event.target.files[0]
+    var picture = event.target.files[0]
 
     this.setState({
       frontPicture: URL.createObjectURL(picture),
       backPicture: this.state.backPicture
     })
 
-    this.fetchExample()
+    console.log("Front picture: " + picture)
+    
+    //this.fetchExample()
+    
+    this.postSignUpForm(picture)
   }
 
   handleBackPicture(event){
@@ -46,7 +52,37 @@ class SignUp extends Component {
       backPicture: URL.createObjectURL(picture)
     })
 
-    this.postExample()
+    //this.postExample()
+  }
+
+  postSignUpForm(picture){
+    const url = 'https://fvspqr8obi.execute-api.us-east-1.amazonaws.com/Production/users';
+    const reader = new FileReader()
+    var data = {
+      id: 20,
+      name: 'Rafa',
+      value: undefined
+    }
+
+    reader.onload = function(upload) {
+      let result = upload.target.result;
+      data.value = result.replace(/^data:image\/[a-z]+;base64,/, "");
+      //console.log(data.value)
+    };
+    reader.readAsDataURL(picture)
+
+    // BAD PRACTICE
+    setTimeout(function(){
+      console.log(JSON.stringify(data))
+
+      fetch(url, { 
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, cors, *same-origin
+        body: JSON.stringify(data), // data can be `string` or {object}!
+      })
+      .then(response => console.log("POST /users  Response Code: " + JSON.stringify(response.status)))
+      .catch(error => console.error("Error:" + error));
+    }, 2000);
   }
 
   fetchExample(){
@@ -221,5 +257,6 @@ class SignUp extends Component {
     )
   }
 }
+
 
 export default SignUp;
