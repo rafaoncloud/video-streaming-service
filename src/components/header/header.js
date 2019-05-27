@@ -16,14 +16,24 @@ class Header extends Component {
     this.state = {
       isOpen: false
     };
+
+    this.handleLogout = this.handleLogout.bind(this)
   }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
 
+  handleLogout(event){
+    localStorage.removeItem('token')
+  }
+
   render (){
+    const isLoggedIn = localStorage.getItem('token');
+
+
     return(  
       <header>
         <Navbar bg="light" expand="lg" fixed="top">
@@ -36,9 +46,15 @@ class Header extends Component {
               <Nav.Link href="/about-us">About Us</Nav.Link>
             </Nav>
             <Nav pullRight>
-              <Nav.Link href="/login" className="text-info">Login</Nav.Link>
+            {isLoggedIn === null &&
+              <Nav.Link href="/login" className="text-info" >Login</Nav.Link>
+            }
+            {isLoggedIn === null &&
               <Nav.Link href="/sign-up" className="text-info">Sign up</Nav.Link>
-              <Nav.Link href="/logout" className="text-danger">Logout</Nav.Link>
+            }
+            {isLoggedIn !== null && 
+              <Nav.Link href="/logout" className="text-danger" onClick={this.handleLogout}>Logout</Nav.Link>
+            }
             </Nav>
           </Navbar.Collapse>
         </Navbar>

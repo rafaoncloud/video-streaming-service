@@ -22,7 +22,7 @@ import createHistory from 'history/createBrowserHistory';
 export const history = createHistory();
 
 class App extends Component {
-  render() {
+  render() {    
     return (
       <Router history={history}>
       <div className="wrapper-app" /*className="App"*/>

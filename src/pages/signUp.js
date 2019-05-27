@@ -72,6 +72,8 @@ class SignUp extends Component {
     console.log("Back picture object: " + this.state.backPictureObj)
 
     var body = {
+      firstName: event.target.firstName.value,
+      lastName: event.target.lastName.value,
       email: event.target.email.value,
       password: event.target.password.value,
       birthDate: event.target.birthDate.value,
@@ -173,13 +175,24 @@ class SignUp extends Component {
   }
 
   render(){
-    /*if(this.state.responseCode === "200"){
-      this.props.history.push("/login");
-    }*/
     return(
       <div>
         <h3 style={{marginBottom:'40px'}}>Create Account</h3>
         <Form onSubmit={this.handleSignUpForm}>
+          <Form.Row> 
+            <Col>
+              <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control required type="text" placeholder="" name="firstName"/>
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group controlId="exampleForm.ControlInput2">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control required type="text" placeholder="" name="lastName"/>
+              </Form.Group>
+            </Col>
+          </Form.Row>
           <Form.Row>
             <Col>
               <Form.Group controlId="exampleForm.ControlInput3">
