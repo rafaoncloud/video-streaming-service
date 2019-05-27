@@ -19,7 +19,6 @@ class ProductsList extends Component {
 	}
 
 	render (){
-
 		var users = this.state.users.map(user =>(
 				<Row style={{marginTop:24}} key={user.id}>
 					<Col> {user.name} {user.lastName} </Col>

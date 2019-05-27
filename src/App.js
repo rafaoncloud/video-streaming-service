@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import { 
-  BrowserRouter as Router,
+  Router,
   Route
 } from 'react-router-dom'
 
@@ -18,10 +18,13 @@ import SignUp from './pages/signUp'
 
 import UserManager from './pages/userManager'
 
+import createHistory from 'history/createBrowserHistory';
+export const history = createHistory();
+
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Router history={history}>
       <div className="wrapper-app" /*className="App"*/>
         <Header/>
         <div className="content-homepage">

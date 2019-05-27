@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import { Form, Button, Col } from 'react-bootstrap'
 import Image from 'react-bootstrap/Image'
 
+import {history} from '../App';
+
+
 class SignUp extends Component {
   constructor(props){
     super(props)
@@ -10,15 +13,16 @@ class SignUp extends Component {
     this.state = {
       frontPicture: '/images/example.jpg',
       backPicture: '/images/example.jpg',
-      example: null
+      frontPictureObj: undefined,
+      backPictureObj: undefined,
+      responseCode: undefined
     }
 
     this.handleFrontPicture = this.handleFrontPicture.bind(this)
     this.handleBackPicture = this.handleBackPicture.bind(this)
     this.fetchExample = this.fetchExample.bind(this)
-    this.postExample = this.postExample.bind(this)
 
-    this.postSignUpForm = this.postSignUpForm.bind(this)
+    this.handleSignUpForm = this.handleSignUpForm.bind(this)
 
     //setInterval(): executes a function, over and over again, at specified time intervals
     //setTimeout() : executes a function, once, after waiting a specified number of milliseconds
@@ -34,14 +38,14 @@ class SignUp extends Component {
 
     this.setState({
       frontPicture: URL.createObjectURL(picture),
-      backPicture: this.state.backPicture
+      backPicture: this.state.backPicture,
+      frontPictureObj: picture,
+      backPictureObj: this.state.backPictureObj
     })
 
     console.log("Front picture: " + picture)
-    
-    //this.fetchExample()
-    
-    this.postSignUpForm(picture)
+    console.log("Front picture: " + this.state.frontPicture)
+    console.log("Front picture: " + this.state.frontPictureObj)
   }
 
   handleBackPicture(event){
@@ -49,41 +53,75 @@ class SignUp extends Component {
 
     this.setState({
       frontPicture: this.state.frontPicture,
-      backPicture: URL.createObjectURL(picture)
+      backPicture: URL.createObjectURL(picture),
+      frontPictureObj: this.state.frontPictureObj,
+      backPictureObj: picture
     })
-
-    //this.postExample()
   }
 
-  postSignUpForm(picture){
+  handleSignUpForm(event){
+    event.preventDefault();
+
     const url = 'https://fvspqr8obi.execute-api.us-east-1.amazonaws.com/Production/users';
-    const reader = new FileReader()
-    var data = {
-      id: 20,
-      name: 'Rafa',
-      value: undefined
+    const readerFrontPicture = new FileReader()
+    const readerBackPicture = new FileReader()
+    
+    console.log("Object URL to front picture: " + this.state.frontPicture)
+    console.log("Front picture object: " + URL.revokeObjectURL(this.state.frontPicture))
+    console.log("Front picture object: " + this.state.frontPictureObj)
+    console.log("Back picture object: " + this.state.backPictureObj)
+
+    var body = {
+      email: event.target.email.value,
+      password: event.target.password.value,
+      birthDate: event.target.birthDate.value,
+      address: event.target.address.value,
+      value: undefined, // Front Picture
+      value2: undefined // Back Picture
     }
 
-    reader.onload = function(upload) {
+    readerFrontPicture.onload = function(upload) {
       let result = upload.target.result;
-      data.value = result.replace(/^data:image\/[a-z]+;base64,/, "");
-      //console.log(data.value)
+      body.value = result.replace(/^data:image\/[a-z]+;base64,/, "");
+      //console.log(body.value)
     };
-    reader.readAsDataURL(picture)
+    readerFrontPicture.readAsDataURL(this.state.frontPictureObj)
+
+    readerBackPicture.onload = function(upload) {
+      let result = upload.target.result;
+      body.value2 = result.replace(/^data:image\/[a-z]+;base64,/, "");
+      //console.log(body.value)
+    };
+    readerBackPicture.readAsDataURL(this.state.backPictureObj)
 
     // BAD PRACTICE
     setTimeout(function(){
-      console.log(JSON.stringify(data))
+      //console.log(JSON.stringify(body))
 
       fetch(url, { 
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, cors, *same-origin
-        body: JSON.stringify(data), // data can be `string` or {object}!
+        body: JSON.stringify(body), // data can be `string` or {object}!
       })
-      .then(response => console.log("POST /users  Response Code: " + JSON.stringify(response.status)))
+      .then(response => { 
+        console.log("POST /users  Response Code: " + JSON.stringify(response.status))
+        if (response.status === 200) {
+          console.log("Success")
+
+          history.push('/login');
+          
+        }
+        /*this.setState({
+          frontPicture: this.state.frontPicture,
+          backPicture: this.state.backPicture,
+          frontPictureObj: this.state.frontPictureObj,
+          backPictureObj: this.state.backPictureObj,
+          responseCode: JSON.stringify(response.status)
+        })*/
+      }) 
       .catch(error => console.error("Error:" + error));
     }, 2000);
-  }
+  }  
 
   fetchExample(){
     const url = 'https://fvspqr8obi.execute-api.us-east-1.amazonaws.com/Production/users';
@@ -134,27 +172,97 @@ class SignUp extends Component {
     });
   }
 
-  postExample(){
-    const url = 'https://fvspqr8obi.execute-api.us-east-1.amazonaws.com/Production/users';
-    var data = this.state.example[0]
-    data.id = 24
-    data.name = "Rafa"
-    console.log(JSON.stringify(data))
-    fetch(url, { 
-          method: "POST", // *GET, POST, PUT, DELETE, etc.
-          mode: "cors", // no-cors, cors, *same-origin
-          body: JSON.stringify(data), // data can be `string` or {object}!
-      })
-    .then(response => console.log("POST /users  Response Code: " + JSON.stringify(response.status)))
-    .catch(error => console.error("Error:" + error));
+  render(){
+    /*if(this.state.responseCode === "200"){
+      this.props.history.push("/login");
+    }*/
+    return(
+      <div>
+        <h3 style={{marginBottom:'40px'}}>Create Account</h3>
+        <Form onSubmit={this.handleSignUpForm}>
+          <Form.Row>
+            <Col>
+              <Form.Group controlId="exampleForm.ControlInput3">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control required type="email" placeholder="" name="email"/>
+              </Form.Group>
+            </Col>
+          </Form.Row>
+          <Form.Row>
+            <Col>
+              <Form.Group controlId="exampleForm.ControlSelect1">
+                <Form.Label>Password</Form.Label>
+                <Form.Control required type="password" placeholder="************" name="password"/>
+              </Form.Group>
+            </Col>
+          </Form.Row>
+          <Form.Row>
+            <Col>
+              <Form.Group controlId="exampleForm.ControlInput4">
+                <Form.Label>Birth Date</Form.Label>
+                <Form.Control required type="text" placeholder="" name="birthDate"/>
+              </Form.Group>
+            </Col>
+          </Form.Row>
+          <Form.Row>
+            <Col>
+              <Form.Group controlId="exampleForm.ControlInput5">
+                <Form.Label>Address</Form.Label>
+                <Form.Control type="text" name="address"/>
+              </Form.Group>
+            </Col>
+          </Form.Row>
+          <Form.Row>
+            <Col>
+              <Form.Group controlId="exampleForm.ControlInput5">
+                <Form.Label>Citizen Card</Form.Label>
+                <br/>
+                <Image src={this.state.frontPicture} height="150px"/>
+              </Form.Group>
+            </Col>
+            <Col>
+                <Form.Group controlId="exampleForm.ControlInput5">
+                  <br/>
+                  <Image src={this.state.backPicture} height="150px"/>
+                </Form.Group>
+            </Col>
+          </Form.Row>
+          <Form.Row>
+            <Col>
+              <Form.Group controlId="exampleForm.ControlInput5">
+                <Form.Label>Upload Front </Form.Label>
+                <Form.Control 
+                  onChange={ (event) => this.handleFrontPicture(event)}
+                  required type="file" placeholder="empty"
+                  accept="image/png, image/jpeg" />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group controlId="exampleForm.ControlInput5">
+                <Form.Label>Upload Back </Form.Label>
+                <Form.Control 
+                  onChange={ (event) => this.handleBackPicture(event)}
+                  required type="file" placeholder="empty"
+                  accept="image/png, image/jpeg" />
+              </Form.Group>
+            </Col>
+          </Form.Row>
+          <div className="center-button">
+            <Button variant="primary" type="submit">
+              Create Account
+            </Button>
+          </div>
+        </Form>
+      </div>
+    );
   }
 
-  render (){
+  /*render (){
     return(
       <div>
         <h3 style={{marginBottom:'40px'}}>Create Account</h3>
         <Form>
-          <Form.Row>
+          <Form.Row> 
             <Col>
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>First Name</Form.Label>
@@ -255,7 +363,7 @@ class SignUp extends Component {
         </Form>
       </div>
     )
-  }
+  }*/
 }
 
 
