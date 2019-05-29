@@ -132,150 +132,158 @@ class UserManager extends Component {
 
 
 	render (){
-		if(this.state.user === null){
-      return(
-        <div>
-          <h3>Fetching User...</h3>
-        </div>
-      )
-    }else {
+		const isEmployee = localStorage.getItem('employee');
+		if(isEmployee === null){
 			return(
-				<div>
-					<h3 style={{marginBottom:'40px'}}>User: {this.state.user.FirstName} {this.state.user.LastName}</h3>
-					<Form onSubmit={this.handleUpdateUser}>
-						<Form.Row>
-							<Col>
-								<Form.Group controlId="exampleForm.ControlInput1">
-									<Form.Label>Id</Form.Label>
-									<Form.Control type="text" placeholder="empty" 
-										value={this.state.user.id}
-										name="id"
-										readOnly
-									/>
-								</Form.Group>
-							</Col>
-						</Form.Row>
-						<Form.Row>
-							<Col>
-								<Form.Group controlId="exampleForm.ControlInput1">
-									<Form.Label>First Name</Form.Label>
-									<Form.Control type="text" placeholder="empty" 
-										defaultValue={this.state.user.FirstName}
-										name="firstName"
-									/>
-								</Form.Group>
-							</Col>
-							<Col>
-								<Form.Group controlId="exampleForm.ControlInput2">
-								<Form.Label>Last Name</Form.Label>
-								<Form.Control type="text" placeholder="empty" 
-									defaultValue={this.state.user.LastName}
-									name="lastName"
-								/>
-								</Form.Group>
-							</Col>
-						</Form.Row>
-						<Form.Row>
-							<Col>
-								<Form.Group controlId="exampleForm.ControlInput3">
-								<Form.Label>Email</Form.Label>
-								<Form.Control type="email" placeholder="empty" 
-										defaultValue={this.state.user.email}
-										name="email"
-										readOnly
-									/>
-								</Form.Group>
-							</Col>
-						</Form.Row>
-						<Form.Row>
-							<Col>
-								<Form.Group controlId="exampleForm.ControlInput4">
-									<Form.Label>Birth Date</Form.Label>
-									<Form.Control type="text" placeholder="empty" 
-										defaultValue={this.state.user.birthData}
-										name="birthday"
-									/>
-								</Form.Group>
-							</Col>
-						</Form.Row>
-						<Form.Row>
-							<Col>
-								<Form.Group controlId="exampleForm.ControlInput5">
-									<Form.Label>Address</Form.Label>
-									<Form.Control type="text" placeholder="empty" 
-										defaultValue={this.state.user.address}
-										name="address"
+				<h3>Your are not authorized!</h3>
+			)
+		}
+		else{
+			if(this.state.user === null){
+				return(
+					<div>
+						<h3>Fetching User...</h3>
+					</div>
+				)
+			}else {
+				return(
+					<div>
+						<h3 style={{marginBottom:'40px'}}>User: {this.state.user.FirstName} {this.state.user.LastName}</h3>
+						<Form onSubmit={this.handleUpdateUser}>
+							<Form.Row>
+								<Col>
+									<Form.Group controlId="exampleForm.ControlInput1">
+										<Form.Label>Id</Form.Label>
+										<Form.Control type="text" placeholder="empty" 
+											value={this.state.user.id}
+											name="id"
+											readOnly
 										/>
-									
-								</Form.Group>
-							</Col>
-						</Form.Row>
-						<Form.Row>
-							<Col>
-								<Form.Group controlId="exampleForm.ControlSelect1">
-									<Form.Label>Has Activated the Box</Form.Label>
-									<Form.Control as="select" 
-										defaultValue={this.state.user.usersStatus}
-										name="userStatus">
-										<option value="1">True</option>
-										<option value="0">False</option>
-									</Form.Control>
-								</Form.Group>
-							</Col>
-						</Form.Row>
-						<Form.Row>
-							<Col>
-								<Form.Group controlId="exampleForm.ControlInput5">
-									<Form.Label>Citizen Card </Form.Label>
-									<br/>
-									<Image src={this.state.picture}  height="150px"/>
-								</Form.Group>
-							</Col>
-							<Col>
+									</Form.Group>
+								</Col>
+							</Form.Row>
+							<Form.Row>
+								<Col>
+									<Form.Group controlId="exampleForm.ControlInput1">
+										<Form.Label>First Name</Form.Label>
+										<Form.Control type="text" placeholder="empty" 
+											defaultValue={this.state.user.FirstName}
+											name="firstName"
+										/>
+									</Form.Group>
+								</Col>
+								<Col>
+									<Form.Group controlId="exampleForm.ControlInput2">
+									<Form.Label>Last Name</Form.Label>
+									<Form.Control type="text" placeholder="empty" 
+										defaultValue={this.state.user.LastName}
+										name="lastName"
+									/>
+									</Form.Group>
+								</Col>
+							</Form.Row>
+							<Form.Row>
+								<Col>
+									<Form.Group controlId="exampleForm.ControlInput3">
+									<Form.Label>Email</Form.Label>
+									<Form.Control type="email" placeholder="empty" 
+											defaultValue={this.state.user.email}
+											name="email"
+											readOnly
+										/>
+									</Form.Group>
+								</Col>
+							</Form.Row>
+							<Form.Row>
+								<Col>
+									<Form.Group controlId="exampleForm.ControlInput4">
+										<Form.Label>Birth Date</Form.Label>
+										<Form.Control type="text" placeholder="empty" 
+											defaultValue={this.state.user.birthData}
+											name="birthday"
+										/>
+									</Form.Group>
+								</Col>
+							</Form.Row>
+							<Form.Row>
+								<Col>
+									<Form.Group controlId="exampleForm.ControlInput5">
+										<Form.Label>Address</Form.Label>
+										<Form.Control type="text" placeholder="empty" 
+											defaultValue={this.state.user.address}
+											name="address"
+											/>
+										
+									</Form.Group>
+								</Col>
+							</Form.Row>
+							<Form.Row>
+								<Col>
+									<Form.Group controlId="exampleForm.ControlSelect1">
+										<Form.Label>Has Activated the Box</Form.Label>
+										<Form.Control as="select" 
+											defaultValue={this.state.user.usersStatus}
+											name="userStatus">
+											<option value="1">True</option>
+											<option value="0">False</option>
+										</Form.Control>
+									</Form.Group>
+								</Col>
+							</Form.Row>
+							<Form.Row>
+								<Col>
 									<Form.Group controlId="exampleForm.ControlInput5">
 										<Form.Label>Citizen Card </Form.Label>
 										<br/>
-										<Image src={this.state.backPicture}  height="150px"/>
+										<Image src={this.state.picture}  height="150px"/>
 									</Form.Group>
-							</Col>
-						</Form.Row>
-						<Form.Row>
-							<Col>
-								<Form.Group controlId="exampleForm.ControlInput5">
-									<Form.Label>Upload Front </Form.Label>
-									<Form.Control 
-										onChange={ (event) => this.handleFrontPicture(event)}
-										type="file" placeholder="empty"
-										accept="image/png, image/jpeg" />
-								</Form.Group>
-							</Col>
-							<Col>
-								<Form.Group controlId="exampleForm.ControlInput5">
-									<Form.Label>Upload Back </Form.Label>
-									<Form.Control 
-										onChange={ (event) => this.handleBackPicture(event)}
-										type="file" placeholder="empty"
-										accept="image/png, image/jpeg"
-										/>
-								</Form.Group>
-							</Col>
-						</Form.Row>
-						<Form.Row>
-							<Col>
-								<Form.Group controlId="exampleForm.ControlTextarea1">
-									<Form.Label>Observations</Form.Label>
-									<Form.Control as="textarea" rows="3" name="observations"/>
-								</Form.Group>
-							</Col>
-						</Form.Row>
-						<div className="center-button">
-							<Button variant="primary" type="submit">
-								Apply Changes
-							</Button>
-						</div>
-					</Form>
-				</div>
-			)
+								</Col>
+								<Col>
+										<Form.Group controlId="exampleForm.ControlInput5">
+											<Form.Label>Citizen Card </Form.Label>
+											<br/>
+											<Image src={this.state.backPicture}  height="150px"/>
+										</Form.Group>
+								</Col>
+							</Form.Row>
+							<Form.Row>
+								<Col>
+									<Form.Group controlId="exampleForm.ControlInput5">
+										<Form.Label>Upload Front </Form.Label>
+										<Form.Control 
+											onChange={ (event) => this.handleFrontPicture(event)}
+											type="file" placeholder="empty"
+											accept="image/png, image/jpeg" />
+									</Form.Group>
+								</Col>
+								<Col>
+									<Form.Group controlId="exampleForm.ControlInput5">
+										<Form.Label>Upload Back </Form.Label>
+										<Form.Control 
+											onChange={ (event) => this.handleBackPicture(event)}
+											type="file" placeholder="empty"
+											accept="image/png, image/jpeg"
+											/>
+									</Form.Group>
+								</Col>
+							</Form.Row>
+							<Form.Row>
+								<Col>
+									<Form.Group controlId="exampleForm.ControlTextarea1">
+										<Form.Label>Observations</Form.Label>
+										<Form.Control as="textarea" rows="3" name="observations"/>
+									</Form.Group>
+								</Col>
+							</Form.Row>
+							<div className="center-button">
+								<Button variant="primary" type="submit">
+									Apply Changes
+								</Button>
+							</div>
+						</Form>
+					</div>
+				)
+			}
 		}
 	}
 }

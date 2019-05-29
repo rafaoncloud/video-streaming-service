@@ -43,13 +43,13 @@ class Header extends Component {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
               <Nav.Link href="/">Home</Nav.Link>
-              {isLoggedIn !== null && 
+              {isActivated === null &&
                 <Nav.Link href="/users">Users</Nav.Link>
               }
               <Nav.Link href="/about-us">About Us</Nav.Link>
             </Nav>
             <Nav pullRight>
-            {isLoggedIn === null &&
+            {isLoggedIn === null && localStorage.getItem('employee') === null &&
               <Nav.Link href="/login" className="text-info" >Login</Nav.Link>
             }
             {isLoggedIn !== null && isEmployee === null && isActivated === "0" &&
@@ -62,6 +62,9 @@ class Header extends Component {
               <Nav.Link href="/sign-up" className="text-info">Sign up</Nav.Link>
             }
             {isLoggedIn !== null && 
+              <Nav.Link href="/login" className="text-danger" onClick={this.handleLogout}>Logout</Nav.Link>
+            }
+            { localStorage.getItem('employee') !== null &&
               <Nav.Link href="/login" className="text-danger" onClick={this.handleLogout}>Logout</Nav.Link>
             }
             </Nav>
