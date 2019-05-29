@@ -27,13 +27,14 @@ class Header extends Component {
   }
 
   handleLogout(event){
-    localStorage.removeItem('token')
+    localStorage.clear()
   }
 
   render (){
     const isLoggedIn = localStorage.getItem('token');
-
-
+    const isEmployee = localStorage.getItem('employee');
+    const isActivated = localStorage.getItem('isActivated');
+    
     return(  
       <header>
         <Navbar bg="light" expand="lg" fixed="top">
@@ -42,18 +43,26 @@ class Header extends Component {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
               <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/users">Users</Nav.Link>
+              {isLoggedIn !== null && 
+                <Nav.Link href="/users">Users</Nav.Link>
+              }
               <Nav.Link href="/about-us">About Us</Nav.Link>
             </Nav>
             <Nav pullRight>
             {isLoggedIn === null &&
               <Nav.Link href="/login" className="text-info" >Login</Nav.Link>
             }
+            {isLoggedIn !== null && isEmployee === null && isActivated === "0" &&
+              <Nav.Link href="/login" className="text-primary" >Activate Account</Nav.Link>
+            }
+            {isLoggedIn !== null && isEmployee === null && isActivated === "1" &&
+              <Nav.Link href="/" className="text-success" >Account Activated</Nav.Link>
+            }
             {isLoggedIn === null &&
               <Nav.Link href="/sign-up" className="text-info">Sign up</Nav.Link>
             }
             {isLoggedIn !== null && 
-              <Nav.Link href="/logout" className="text-danger" onClick={this.handleLogout}>Logout</Nav.Link>
+              <Nav.Link href="/login" className="text-danger" onClick={this.handleLogout}>Logout</Nav.Link>
             }
             </Nav>
           </Navbar.Collapse>

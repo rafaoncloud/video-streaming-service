@@ -255,7 +255,7 @@ class SignUp extends Component {
                 <Form.Label>Upload Back </Form.Label>
                 <Form.Control 
                   onChange={ (event) => this.handleBackPicture(event)}
-                  required type="file" placeholder="empty"
+                  type="file" placeholder="empty"
                   accept="image/png, image/jpeg" />
               </Form.Group>
             </Col>

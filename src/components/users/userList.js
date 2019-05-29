@@ -19,46 +19,50 @@ class ProductsList extends Component {
 	}
 
 	render (){
-		var users = this.state.users.map(user =>(
-				<Row style={{marginTop:24}} key={user.id}>
-					<Col> {user.name} {user.lastName} </Col>
-					<Col> {user.birthDate} </Col>
-					<Col> {user.boxActive ? 
-						<img src="images/icons/green-status.png" alt="True " height="15px"/>
-						: 
-						<img src="images/icons/red-status.png" alt="False " height="13px"/> 
-					 } 
-					</Col>
-					<Col> 
-						<Button variant="outline-primary"> 
-							<Link to={{
-								pathname:'/user',
-								state:{
-									userId: user.id
-								}
-							}} > 
-								Change 
-							</Link> 
-						</Button> 
-					</Col>
-				</Row>
-		))
+		if(this.state.users !== null){
+      var users = this.state.users.map(user =>(
+          <Row style={{marginTop:24,fontSize:'70%'}} key={user.id}>
+            <Col> {user.id} </Col>
+            <Col> {user.FirstName} {user.LastName} </Col>
+            <Col> {user.email} </Col>
+            <Col> {user.usersStatus === 1 ? 
+              <img src="images/icons/green-status.png" alt="1" height="15px"/>
+              : 
+              <img src="images/icons/red-status.png" alt="0" height="13px"/> 
+            } 
+            </Col>
+            <Col> 
+              <Button variant="outline-primary"> 
+                <Link to={{
+                  pathname:'/user',
+                  state:{
+                    id: user.id
+                  }
+                }}> 
+                  Change 
+                </Link> 
+              </Button> 
+            </Col>
+          </Row>
+      ))
+    }
 
-		return(
-			<div>
-				<br/>
-				<Container>
-					<Row style={{fontWeight:'bold',fontSize:'120%'}}>
-						<Col> Name </Col>
-						<Col> Birth Date </Col>
-						<Col> Box Active </Col>
-						<Col> </Col>
-					</Row>
-					{users}
-				</Container>
-			</div>
-		)
-	}
+    return(
+      <div>
+        <br/>
+        <Container>
+          <Row style={{fontWeight:'bold',fontSize:'100%'}}>
+            <Col> Id </Col>
+            <Col> Name </Col>
+            <Col> Email </Col>
+            <Col> Box Active </Col>
+            <Col> </Col>
+          </Row>
+          {users}
+        </Container>
+      </div>
+    )
+  }
 }
 
 export default ProductsList;

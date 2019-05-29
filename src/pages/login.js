@@ -12,10 +12,21 @@ class Login extends Component {
   constructor(props){
     super(props)
 
-    this.state = {
-      picture: '/images/example.jpg',
-      pictureObj: undefined,
-    }
+    const id = localStorage.getItem('id');
+    if(id !== null)
+      this.state = {
+        picture: '/images/example.jpg',
+        pictureObj: undefined,
+        id: id
+      }
+    else
+      this.state = {
+        picture: '/images/example.jpg',
+        pictureObj: undefined,
+        id: undefined
+      }
+    
+      
 
     this.handleChangePicture = this.handleChangePicture.bind(this);
     this.handleFaceRecognition = this.handleFaceRecognition.bind(this);
@@ -47,11 +58,23 @@ class Login extends Component {
     }) 
     .then(body => {
       //window.alert(JSON.stringify(body, null, "\t"))
-      console.log("Before Store in Local Storage, Token: " +  body)
-      localStorage.setItem('token', body);
+      this.setState({
+        id: body.id,
+        picture: this.state.picture,
+        pictureObj: this.state.pictureObj,
+      })
+
+      console.log("Before Store in Local Storage, Token: " +  body.token)
+      localStorage.setItem('token', body.token);
+      localStorage.setItem('id',body.id);
+      localStorage.setItem('isActivated',body.usersStatus); 
       console.log("After get from Local Storage, Token: " + localStorage.getItem('token'))
-      
-      history.push('/login'); 
+      console.log("is Activated",localStorage.getItem('isActivated'))
+
+      if(localStorage.getItem('isActivated') === "0")
+        history.push('/login')
+      else 
+        history.push('/')
     })
     .catch(error => console.error("Error:" + error));
   }
@@ -68,10 +91,12 @@ class Login extends Component {
   handleFaceRecognition(event){
     event.preventDefault();
 
-    const url = 'https://fvspqr8obi.execute-api.us-east-1.amazonaws.com/Production/----';
+    var url = 'https://fvspqr8obi.execute-api.us-east-1.amazonaws.com/Production/users/';
+    url += this.state.id
     const reader = new FileReader()
 
     var body = {
+      id: this.state.id,
       value: undefined
     }
 
@@ -90,16 +115,17 @@ class Login extends Component {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, cors, *same-origin
         body: JSON.stringify(body), // data can be `string` or {object}!
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
-        },
+        //headers: {
+          //Authorization: 'Bearer ' + localStorage.getItem('token'),
+        //},
       })
       .then(response => { 
         console.log("POST /users  Response Code: " + JSON.stringify(response.status))
         if (response.status === 200) {
           console.log("Success")
 
-          history.push('/homePage');
+          localStorage.setItem('isActivated',"1")
+          history.push('/');
         }
       }) 
       .catch(error => console.error("Error:" + error));
@@ -107,7 +133,10 @@ class Login extends Component {
   }
 
   render (){
-    if(localStorage.getItem('token') !== null)
+    const id = this.state.id
+
+    if(localStorage.getItem('token') !== null){
+      console.log("User Id: " + id)
       return(
         <div>
           <h3 style={{marginBottom:'40px'}}>Face Recognition</h3>
@@ -135,6 +164,7 @@ class Login extends Component {
           </Form>
         </div>
       )
+    }
     else
       return(
         <div className="login">
