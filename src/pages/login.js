@@ -76,7 +76,10 @@ class Login extends Component {
       else 
         history.push('/')
     })
-    .catch(error => console.error("Error:" + error));
+    .catch(error => {
+      console.error("Error:" + error)
+      window.alert('Login Unsuccessful')
+    });
   }
 
   handleChangePicture(event){
@@ -123,11 +126,21 @@ class Login extends Component {
         console.log("POST /users  Response Code: " + JSON.stringify(response.status))
         if (response.status === 200) {
           console.log("Success")
+        }
+        return response.json()
+      }) 
+      .then(body => {
+        const isActivated = body.toString().trim()
+        console.log('isActivated: ' + isActivated)
 
-          localStorage.setItem('isActivated',"1")
+        if(isActivated === "1"){
+          localStorage.setItem('isActivated',"1")                   
           history.push('/');
         }
-      }) 
+        else{
+          window.alert('The account was not activated. Try again!')
+        }
+      })
       .catch(error => console.error("Error:" + error));
     }, 2000);
   }

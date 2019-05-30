@@ -10,11 +10,13 @@ class UsersManager extends Component {
   constructor(props) {
     super(props);
 
+    if(localStorage.getItem('employee') !== null){
+      this.handleUsers();
+    }
+
 		this.state = {
 			users: null
     };
-
-    this.handleUsers();
 
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -23,8 +25,11 @@ class UsersManager extends Component {
     const url = 'https://fvspqr8obi.execute-api.us-east-1.amazonaws.com/Production/users'
 
     fetch(url, { 
-          method: "GET", // *GET, POST, PUT, DELETE, etc.
-          mode: "cors" // no-cors, cors, *same-origin
+        method: "GET", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, cors, *same-origin
+        headers: {
+          "authorizationToken": localStorage.getItem('employeeToken')
+        },
       })  
     .then((resp) => {
       console.log("GET /users Response Code: " + resp.status)
@@ -86,19 +91,25 @@ class UsersManager extends Component {
       console.log("POST employee/auth  Response Code: " + JSON.stringify(response.status))
       if (response.status === 200) {
         console.log("Success")
+
       }
       return response.json()
     }) 
     .then(body => {
       //window.alert(JSON.stringify(body, null, "\t"))
       console.log("Before Store in Local Storage, Employee: " +  body.id)
-      localStorage.setItem('employee',body.id); 
+      console.log("Before Store in Local Storage, Token: " +  body.token)
+      localStorage.setItem('employee',body.id)
+      localStorage.setItem('employeeToken',body.token)
       localStorage.setItem('isActivated',"2")
-      console.log("After get from Local Storage, Employee: " + localStorage.getItem('employee'))
-    })
-    .catch(error => console.error("Error:" + error));
 
-    history.push('/users')
+      console.log("After get from Local Storage, Employee: " + localStorage.getItem('employee'))
+      console.log("After get from Local Storage, Token: " + localStorage.getItem('employeeToken'))
+
+
+      history.push('/users')
+    })
+    .catch(error => console.error(">Error: " + error));
   }
 
   render (){
@@ -106,29 +117,31 @@ class UsersManager extends Component {
     const isActivated = localStorage.getItem('isActivated');
 		if(isActivated === null && isEmployee === null){
       return(
-        <div className="login">
-          <h3 className="header-login">Login As Employee</h3>
-          <Form onSubmit={this.handleSubmit}>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" name="email" placeholder="Enter email"/>
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
-            </Form.Group>
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" name="password" placeholder="Password" />
-            </Form.Group>
-            <Form.Group controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Keep Logged in" />
-            </Form.Group>
-            <div className="center-button">
-            <Button style={{width:'100px'}} variant="primary" type="submit">
-              Login
-            </Button>
-            </div>
-          </Form>
+        <div style={{backgroundColor:'rgb(245,245,245)'}}>
+          <div className="login">
+            <h3 className="header-login">Login As Employee</h3>
+            <Form onSubmit={this.handleSubmit}>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control type="email" name="email" placeholder="Enter email"/>
+                <Form.Text className="text-muted">
+                  We'll never share your email with anyone else.
+                </Form.Text>
+              </Form.Group>
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="password" name="password" placeholder="Password" />
+              </Form.Group>
+              <Form.Group controlId="formBasicCheckbox">
+                <Form.Check type="checkbox" label="Keep Logged in" />
+              </Form.Group>
+              <div className="center-button">
+              <Button style={{width:'100px'}} variant="primary" type="submit">
+                Login
+              </Button>
+              </div>
+            </Form>
+          </div>
         </div>
       )
     }
